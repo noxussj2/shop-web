@@ -1,0 +1,76 @@
+ul,
+dl,
+li,
+dd,
+dt {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin: 0;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    appearance: none !important;
+}
+
+input[type='number'] {
+    appearance: textfield !important;
+}
+
+span {
+    display: inline-block;
+}
+
+body {
+    font-family: 'PingFang SC', 'Microsoft YaHei', 'Arial Regular' !important;
+}
+
+// 滚动条样式
+* {
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+        background: transparent;
+        transition: 0.3s ease-out;
+    }
+
+    &::-webkit-scrollbar-track {
+        transition: 0.3s ease-out;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        width: 6px;
+        height: 6px;
+        border-radius: 4px;
+        background: rgba(#909399, 0.3);
+        transition: 0.3s ease-out;
+
+        &:hover {
+            background: rgba(#909399, 0.6);
+        }
+    }
+}
+
+button {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+}
