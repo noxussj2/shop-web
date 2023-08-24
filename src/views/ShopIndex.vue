@@ -2,7 +2,8 @@
     <div class="shop-index">
         <div class="index__banner">
             <h4>Shop</h4>
-            <h5><span>Home</span><img src="@/assets/shop/icon-arrow.png" alt="" /><span>Shop</span></h5>
+            <BreadcrumbNav :path="path" />
+            <!-- <h5><span>Home</span><img src="@/assets/shop/icon-arrow.png" alt="" /><span>Shop</span></h5> -->
         </div>
 
         <div class="index__products">
@@ -65,9 +66,18 @@
 <script>
 import ProductCard from '@/components/ProductCard.vue'
 import PaginationButton from '@/components/PaginationButton.vue'
+import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 
 export default {
-    components: { ProductCard, PaginationButton }
+    components: { ProductCard, PaginationButton, BreadcrumbNav },
+    data() {
+        return {
+            path: [
+                { name: 'Home', path: '/homeIndex' },
+                { name: 'Shop', path: '/shopIndex' }
+            ]
+        }
+    }
 }
 </script>
 

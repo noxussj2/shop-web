@@ -1,5 +1,5 @@
 <template>
-    <div class="product-card">
+    <div class="product-card" @click="link">
         <img src="@/assets/home/photo1.png" />
 
         <div class="card__container">
@@ -24,11 +24,22 @@
     </div>
 </template>
 
+<script>
+export default {
+    methods: {
+        link() {
+            this.$router.push('/shopDetail')
+        }
+    }
+}
+</script>
+
 <style lang="scss" scoped>
 .product-card {
     position: relative;
     height: 446px;
     background-color: #f4f5f7;
+    cursor: pointer;
 
     img {
         width: 100%;
