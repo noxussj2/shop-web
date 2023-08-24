@@ -4,8 +4,8 @@
 
         <header>
             <div class="nav__menu">
-                <span>Home</span>
-                <span>Shop</span>
+                <span @click="link('/homeIndex')">Home</span>
+                <span @click="link('/shopIndex')">Shop</span>
                 <span>About</span>
                 <span>Concat</span>
             </div>
@@ -18,6 +18,17 @@
         </header>
     </div>
 </template>
+
+<script>
+export default {
+    methods: {
+        link(path) {
+            if (this.$route.path === path) return
+            this.$router.push(path)
+        }
+    }
+}
+</script>
 
 <style lang="scss" scoped>
 .header-nav {
@@ -38,10 +49,15 @@
         align-items: center;
 
         .nav__menu {
+            span:hover {
+                color: #000;
+            }
+
             span {
                 font-size: 16px;
                 line-height: 16px;
                 font-weight: bold;
+                cursor: pointer;
             }
 
             span + span {
