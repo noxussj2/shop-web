@@ -13,19 +13,19 @@
             <div class="nav__operate">
                 <img src="@/assets/icon-user.png" />
                 <img src="@/assets/icon-search.png" />
-                <img src="@/assets/icon-shoping.png" @click="carDrawer = !carDrawer" />
+                <img src="@/assets/icon-shoping.png" @click="cartDrawer = !cartDrawer" />
             </div>
         </header>
 
-        <ShopCar />
+        <CartDrawer />
     </div>
 </template>
 
 <script>
-import ShopCar from '@/components/ShopCar.vue'
+import CartDrawer from '@/components/CartDrawer.vue'
 
 export default {
-    components: { ShopCar },
+    components: { CartDrawer },
     methods: {
         link(path) {
             if (this.$route.path === path) return
@@ -33,12 +33,12 @@ export default {
         }
     },
     computed: {
-        carDrawer: {
+        cartDrawer: {
             get() {
-                return this.$store.state.car.show
+                return this.$store.state.cart.show
             },
             set(val) {
-                this.$store.commit('car/showCar', val)
+                this.$store.commit('cart/showCart', val)
             }
         }
     }

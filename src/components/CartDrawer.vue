@@ -2,26 +2,26 @@
     <el-drawer :visible.sync="drawer" direction="rtl" size="417px" :with-header="false">
         <header>
             <h4>Shopping Cart</h4>
-            <img src="@/assets/shop-car/icon-close.png" />
+            <img src="@/assets/cart-drawer/icon-close.png" />
         </header>
 
         <main>
             <section>
-                <img src="@/assets/shop-car/car1.png" />
+                <img src="@/assets/cart-drawer/car1.png" />
                 <div class="section__info">
                     <h5>Asgaard sofa</h5>
                     <p><span>1</span> <span>x</span> <span class="info__price">Rs. 250,000.00</span></p>
                 </div>
-                <img src="@/assets/shop-car/icon-del.png" class="section__del" />
+                <img src="@/assets/cart-drawer/icon-del.png" class="section__del" />
             </section>
 
             <section>
-                <img src="@/assets/shop-car/car2.png" />
+                <img src="@/assets/cart-drawer/car2.png" />
                 <div class="section__info">
                     <h5>Casaliving Wood</h5>
                     <p><span>1</span> <span>x</span> <span class="info__price">Rs. 270,000.00</span></p>
                 </div>
-                <img src="@/assets/shop-car/icon-del.png" class="section__del" />
+                <img src="@/assets/cart-drawer/icon-del.png" class="section__del" />
             </section>
         </main>
 
@@ -45,10 +45,10 @@ export default {
     computed: {
         drawer: {
             get() {
-                return this.$store.state.car.show
+                return this.$store.state.cart.show
             },
             set(val) {
-                this.$store.commit('car/showCar', val)
+                this.$store.commit('cart/showCart', val)
             }
         }
     }

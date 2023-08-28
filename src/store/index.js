@@ -5,13 +5,13 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     modules: {
-        car: {
+        cart: {
             namespaced: true,
             state: {
                 show: true
             },
             mutations: {
-                showCar(state, payload) {
+                showCart(state, payload) {
                     state.show = payload
                 }
             }
