@@ -6,71 +6,59 @@
         </div>
 
         <div class="index__products">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            <div class="products__table">
+                <table>
+                    <thead>
+                        <th style="width: 30%">Product</th>
+                        <th style="width: 20%">Price</th>
+                        <th style="width: 15%">Quantity</th>
+                        <th style="width: 30%">Subtotal</th>
+                    </thead>
 
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+                    <tbody>
+                        <tr>
+                            <td><img class="icon-photo" src="@/assets/cart-index/car1.png" /> Asgaard sofa</td>
+                            <td>Rs. 250,000.00</td>
+                            <td><el-input v-model="input" /></td>
+                            <td class="tr__total">
+                                <span>Rs. 250,000.00</span>
+                                <img class="icon-del" src="@/assets/cart-index/icon-del.png" />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            <div class="products__totals">
+                <h5>Cart Totals</h5>
 
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+                <div class="totals__row">
+                    <span>Subtotal</span>
+                    <p>Rs. 250,000.00</p>
+                </div>
+
+                <div class="totals__row">
+                    <span>Total</span>
+                    <p class="total">Rs. 250,000.00</p>
+                </div>
+
+                <button>Check Out</button>
+            </div>
         </div>
 
-        <PaginationButton />
-
-        <footer>
-            <div class="footer__item">
-                <img src="@/assets/shop/icon-quality.png" alt="" />
-                <main>
-                    <h4>High Quality</h4>
-                    <p>crafted from top materials</p>
-                </main>
-            </div>
-            <div class="footer__item">
-                <img src="@/assets/shop/icon-protection.png" alt="" />
-                <main>
-                    <h4>Warranty Protection</h4>
-                    <p>Over 2 years</p>
-                </main>
-            </div>
-            <div class="footer__item">
-                <img src="@/assets/shop/icon-shipping.png" alt="" />
-                <main>
-                    <h4>Free Shipping</h4>
-                    <p>Order over 150 $</p>
-                </main>
-            </div>
-            <div class="footer__item">
-                <img src="@/assets/shop/icon-support.png" alt="" />
-                <main>
-                    <h4>24 / 7 Support</h4>
-                    <p>Dedicated support</p>
-                </main>
-            </div>
-        </footer>
+        <FooterFuniro />
     </div>
 </template>
 
 <script>
-import ProductCard from '@/components/ProductCard.vue'
-import PaginationButton from '@/components/PaginationButton.vue'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
+import FooterFuniro from '@/components/FooterFuniro.vue'
 
 export default {
-    components: { ProductCard, PaginationButton, BreadcrumbNav },
+    components: { BreadcrumbNav, FooterFuniro },
     data() {
         return {
+            input: 1,
             path: [
                 { name: 'Home', path: '/homeIndex' },
                 { name: 'Cart', path: '/cartIndex' }
@@ -130,47 +118,141 @@ export default {
     .index__products {
         margin-top: 70px;
         padding: 0 102px;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr 1fr;
-        grid-row-gap: 32px;
-        grid-column-gap: 32px;
-    }
-
-    footer {
-        margin-top: 209px;
-        padding: 0 52px;
         width: 100%;
-        height: 270px;
-        background: #faf3ea;
         display: flex;
-        justify-content: space-between;
-        align-items: center;
 
-        .footer__item {
+        .products__table {
+            flex-grow: 1;
+            width: 0;
+
+            table {
+                border-spacing: 0;
+
+                thead {
+                    th {
+                        padding-left: 40px;
+                        height: 55px;
+                        color: #000;
+                        font-size: 16px;
+                        background-color: #f9f1e7;
+                        text-align: left;
+                    }
+                }
+
+                tbody:before {
+                    content: '';
+                    display: block;
+                    height: 55px;
+                }
+
+                tbody {
+                    tr {
+                        height: 95px;
+                        vertical-align: middle;
+
+                        td {
+                            padding-left: 40px;
+                            color: #9f9f9f;
+                        }
+
+                        .tr__total {
+                            color: #000;
+
+                            span {
+                                line-height: 16px;
+                                display: inline-block;
+                                vertical-align: middle;
+                            }
+                        }
+
+                        .icon-photo {
+                            margin-right: 34px;
+                            width: 105px;
+                            height: 95px;
+                            display: inline-block;
+                            vertical-align: middle;
+                        }
+
+                        .icon-del {
+                            margin-left: 50px;
+                            width: 28px;
+                            height: 28px;
+                            display: inline-block;
+                            vertical-align: middle;
+                            cursor: pointer;
+                        }
+
+                        .el-input {
+                            width: 64px;
+
+                            :deep(.el-input__inner) {
+                                padding: 0;
+                                height: 32px;
+                                line-height: 32px;
+                                border-radius: 5px;
+                                text-align: center;
+                                border: 1px solid #9f9f9f;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        .products__totals {
+            margin-left: 30px;
+            padding: 15px 75px 0;
+            width: 393px;
+            height: 390px;
+            background: #f9f1e7;
             display: flex;
+            flex-direction: column;
             align-items: center;
 
-            img {
-                width: 60px;
-                height: 60px;
+            h5 {
+                margin-bottom: 60px;
+                color: #000;
+                font-size: 32px;
+                line-height: 48px;
             }
 
-            main {
-                margin-left: 10px;
+            .totals__row {
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
 
-                h4 {
-                    color: #242424;
-                    font-size: 25px;
-                    line-height: 36px;
+                span {
+                    color: #000;
+                    font-size: 16px;
+                    line-height: 24px;
                 }
 
                 p {
-                    margin-top: 2px;
-                    overflow: hidden;
-                    color: #898989;
+                    color: #9f9f9f;
+                    font-size: 16px;
+                    line-height: 24px;
+                }
+
+                p.total {
+                    color: #b88e2f;
                     font-size: 20px;
                     line-height: 30px;
                 }
+            }
+
+            .totals__row + .totals__row {
+                margin-top: 30px;
+            }
+
+            button {
+                margin-top: 42px;
+                width: 222px;
+                height: 58px;
+                border-radius: 15px;
+                background-color: transparent;
+                border: 1px solid #000;
+                cursor: pointer;
             }
         }
     }

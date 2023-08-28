@@ -32,7 +32,7 @@
             </div>
 
             <div class="footer__button-group">
-                <button>Cart</button>
+                <button @click="link('/cartIndex')">Cart</button>
                 <button>Checkout</button>
                 <button>Comparison</button>
             </div>
@@ -42,6 +42,12 @@
 
 <script>
 export default {
+    methods: {
+        link(path) {
+            if (this.$route.path === path) return
+            this.$router.push(path)
+        }
+    },
     computed: {
         drawer: {
             get() {

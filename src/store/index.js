@@ -8,7 +8,7 @@ const store = new Vuex.Store({
         cart: {
             namespaced: true,
             state: {
-                show: true
+                show: false
             },
             mutations: {
                 showCart(state, payload) {
