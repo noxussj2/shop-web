@@ -13,18 +13,33 @@
             <div class="nav__operate">
                 <img src="@/assets/icon-user.png" />
                 <img src="@/assets/icon-search.png" />
-                <img src="@/assets/icon-shoping.png" />
+                <img src="@/assets/icon-shoping.png" @click="carDrawer = !carDrawer" />
             </div>
         </header>
+
+        <ShopCar />
     </div>
 </template>
 
 <script>
+import ShopCar from '@/components/ShopCar.vue'
+
 export default {
+    components: { ShopCar },
     methods: {
         link(path) {
             if (this.$route.path === path) return
             this.$router.push(path)
+        }
+    },
+    computed: {
+        carDrawer: {
+            get() {
+                return this.$store.state.car.show
+            },
+            set(val) {
+                this.$store.commit('car/showCar', val)
+            }
         }
     }
 }
@@ -71,6 +86,7 @@ export default {
             img {
                 width: 28px;
                 height: 28px;
+                cursor: pointer;
             }
 
             img + img {

@@ -3,7 +3,6 @@
         <div class="index__banner">
             <h4>Shop</h4>
             <BreadcrumbNav :path="path" />
-            <!-- <h5><span>Home</span><img src="@/assets/shop/icon-arrow.png" alt="" /><span>Shop</span></h5> -->
         </div>
 
         <div class="index__products">
