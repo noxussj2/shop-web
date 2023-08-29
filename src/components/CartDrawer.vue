@@ -33,7 +33,7 @@
 
             <div class="footer__button-group">
                 <button @click="link('/cartIndex')">Cart</button>
-                <button>Checkout</button>
+                <button @click="link('/checkoutIndex')">Checkout</button>
                 <button>Comparison</button>
             </div>
         </footer>

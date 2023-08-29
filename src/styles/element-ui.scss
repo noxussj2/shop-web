@@ -1,3 +1,40 @@
 .v-modal {
     opacity: 0.2 !important;
 }
+
+.el-form {
+    .el-form-item {
+        margin-bottom: 36px;
+
+        .el-form-item__label {
+            padding-bottom: 22px;
+            color: #000;
+            font-size: 16px;
+            line-height: 24px;
+        }
+
+        .el-form-item__content {
+            line-height: 60px;
+        }
+
+        .el-input {
+            .el-input__inner {
+                padding: 0 30px;
+                height: 60px;
+            }
+
+            .el-input__suffix {
+                width: 50px;
+            }
+
+            input::placeholder {
+                color: #9f9f9f;
+                font-size: 16px;
+            }
+        }
+
+        .el-select {
+            width: 100%;
+        }
+    }
+}

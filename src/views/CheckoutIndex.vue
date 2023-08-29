@@ -1,0 +1,308 @@
+<template>
+    <div class="cart-index">
+        <div class="index__banner">
+            <h4>Checkout</h4>
+            <BreadcrumbNav :path="path" />
+        </div>
+
+        <el-row :gutter="26" :style="{ marginTop: '62px' }">
+            <el-col :span="12">
+                <div class="index__details">
+                    <h4>Billing details</h4>
+
+                    <el-form ref="formRef" :model="form" label-position="top">
+                        <el-form-item>
+                            <el-row :gutter="30">
+                                <el-col :span="12">
+                                    <el-form-item label="First Name" prop="firstName">
+                                        <el-input v-model="form.firstName" />
+                                    </el-form-item>
+                                </el-col>
+                                <el-col :span="12">
+                                    <el-form-item label="Last Name" prop="lastName">
+                                        <el-input v-model="form.lastName" />
+                                    </el-form-item>
+                                </el-col>
+                            </el-row>
+                        </el-form-item>
+                        <el-form-item label="Company Name (Optional)" prop="companyName">
+                            <el-input v-model="form.companyName" />
+                        </el-form-item>
+                        <el-form-item label="Country / Region" prop="country">
+                            <el-select v-model="form.country" placeholder="Sri Lanka">
+                                <el-option label="Options1" value="1" />
+                                <el-option label="Options2" value="2" />
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="Street address" prop="street">
+                            <el-input v-model="form.street" />
+                        </el-form-item>
+                        <el-form-item label="Town / City" prop="city">
+                            <el-input v-model="form.city" />
+                        </el-form-item>
+                        <el-form-item label="Province" prop="province">
+                            <el-select v-model="form.province" placeholder="Western Province">
+                                <el-option label="Options1" value="1" />
+                                <el-option label="Options2" value="2" />
+                            </el-select>
+                        </el-form-item>
+                        <el-form-item label="ZIP code" prop="zipCode">
+                            <el-input v-model="form.zipCode" />
+                        </el-form-item>
+                        <el-form-item label="Phone" prop="phone">
+                            <el-input v-model="form.phone" />
+                        </el-form-item>
+                        <el-form-item label="Email address" prop="email">
+                            <el-input v-model="form.email" />
+                        </el-form-item>
+                        <el-form-item label="" prop="additional">
+                            <el-input v-model="form.additional" placeholder="Additional information" />
+                        </el-form-item>
+                    </el-form>
+                </div>
+            </el-col>
+
+            <el-col :span="12">
+                <div class="index__product">
+                    <div class="product__row">
+                        <h5>Product</h5>
+                        <h5>Subtotal</h5>
+                    </div>
+                    <div class="product__row">
+                        <span>
+                            <span class="row__name">Asgaard sofa</span>
+                            <span class="row__x">x</span>
+                            <span>1</span>
+                        </span>
+                        <span>Rs. 250,000.00</span>
+                    </div>
+                    <div class="product__row">
+                        <span>Subtotal</span>
+                        <span>Rs. 250,000.00</span>
+                    </div>
+                    <div class="product__row">
+                        <span>Total</span>
+                        <h5 class="row__total">Rs. 250,000.00</h5>
+                    </div>
+
+                    <footer>
+                        <ul>
+                            <li class="selected">Direct Bank Transfer</li>
+                            <p>
+                                Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until
+                                the funds have cleared in our account.
+                            </p>
+                            <li>Direct Bank Transfer</li>
+                            <li>Cash On Delivery</li>
+                            <summary>
+                                Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other
+                                purposes described in our privacy policy.
+                            </summary>
+                        </ul>
+
+                        <button>Place order</button>
+                    </footer>
+                </div>
+            </el-col>
+        </el-row>
+
+        <FooterFuniro />
+    </div>
+</template>
+
+<script>
+import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
+import FooterFuniro from '@/components/FooterFuniro.vue'
+
+export default {
+    components: { BreadcrumbNav, FooterFuniro },
+    data() {
+        return {
+            input: 1,
+            path: [
+                { name: 'Home', path: '/homeIndex' },
+                { name: 'Checkout', path: '/checkoutIndex' }
+            ],
+            form: {
+                firstName: '',
+                lastName: '',
+                companyName: '',
+                country: '',
+                street: '',
+                city: '',
+                province: '',
+                zipCode: '',
+                phone: '',
+                email: '',
+                additional: ''
+            }
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.cart-index {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > .el-row {
+        padding: 0 100px;
+        width: 100%;
+    }
+
+    .index__banner {
+        width: 100%;
+        height: 316px;
+        background-image: url('@/assets/shop/banner.png');
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        h4 {
+            color: #000;
+            font-size: 48px;
+            line-height: 72px;
+        }
+
+        h5 {
+            margin-top: 2px;
+            color: #000;
+            font-size: 16px;
+            line-height: 24px;
+            display: flex;
+            align-items: center;
+
+            img {
+                margin: 0 6px;
+                width: 20px;
+                height: 20px;
+            }
+
+            span:first-of-type {
+                font-weight: bold;
+            }
+
+            span:last-of-type {
+                font-weight: normal;
+            }
+        }
+    }
+
+    .index__details {
+        padding: 35px 78px 70px;
+
+        h4 {
+            margin-bottom: 36px;
+            font-size: 36px;
+            line-height: 54px;
+        }
+    }
+
+    .index__product {
+        padding: 86px 38px 86px;
+
+        .product__row {
+            color: #000;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            h5 {
+                font-size: 24px;
+                line-height: 24px;
+            }
+
+            .row__name {
+                color: #9f9f9f;
+            }
+
+            .row__x {
+                margin: 0 10px;
+                font-size: 16px;
+            }
+
+            .row__total {
+                color: #b88e2f;
+                font-size: 24px;
+                line-height: 24px;
+            }
+        }
+
+        .product__row + .product__row {
+            margin-top: 28px;
+        }
+
+        footer {
+            margin-top: 32px;
+            padding-top: 22px;
+            border-top: 1px solid #d9d9d9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            ul {
+                li::before {
+                    content: '';
+                    margin-right: 15px;
+                    background-image: url('@/assets/icon-circle.png');
+                    background-repeat: no-repeat;
+                    width: 14px;
+                    height: 14px;
+                }
+
+                li {
+                    color: #9f9f9f;
+                    font-size: 16px;
+                    line-height: 24px;
+                    list-style: none;
+                    display: flex;
+                    align-items: center;
+                }
+
+                li + li {
+                    margin-top: 12px;
+                }
+
+                li.selected::before {
+                    background-image: url('@/assets/icon-circle-selected.png');
+                }
+
+                li.selected {
+                    color: #000;
+                }
+
+                p {
+                    margin-top: 10px;
+                    margin-bottom: 25px;
+                    color: #9f9f9f;
+                    font-size: 16px;
+                    line-height: 24px;
+                }
+
+                summary {
+                    margin-top: 22px;
+                    color: #000;
+                    font-size: 16px;
+                    line-height: 24px;
+                    text-align: justify;
+                }
+            }
+
+            button {
+                margin-top: 40px;
+                width: 318px;
+                height: 64px;
+                border-radius: 15px;
+                background-color: transparent;
+                border: 1px solid #000;
+            }
+        }
+    }
+}
+</style>
