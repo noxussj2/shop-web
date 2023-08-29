@@ -22,6 +22,10 @@ const routes = [
     {
         path: '/checkoutIndex',
         component: () => import('../views/CheckoutIndex.vue')
+    },
+    {
+        path: '/contactIndex',
+        component: () => import('../views/ContactIndex.vue')
     }
 ]
 

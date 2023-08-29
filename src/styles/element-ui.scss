@@ -33,8 +33,19 @@
             }
         }
 
+        .el-textarea {
+            textarea::placeholder {
+                color: #9f9f9f;
+                font-size: 16px;
+            }
+        }
+
         .el-select {
             width: 100%;
         }
+    }
+
+    .el-form-item:last-child {
+        margin-bottom: 0;
     }
 }

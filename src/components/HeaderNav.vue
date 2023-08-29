@@ -7,7 +7,7 @@
                 <span @click="link('/homeIndex')">Home</span>
                 <span @click="link('/shopIndex')">Shop</span>
                 <span>About</span>
-                <span>Concat</span>
+                <span @click="link('/contactIndex')">Concat</span>
             </div>
 
             <div class="nav__operate">
