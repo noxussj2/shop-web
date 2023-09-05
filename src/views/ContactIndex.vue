@@ -1,6 +1,7 @@
 <template>
     <div class="contact-index">
         <div class="index__banner">
+            <img :src="banners.images && banners.images[0]" />
             <h4>Contact</h4>
             <BreadcrumbNav :path="path" />
         </div>
@@ -13,15 +14,15 @@
                 <div class="details__item">
                     <img src="@/assets/contact-index/icon-address.png" />
                     <div class="item__title">Address</div>
-                    <p>236 5th SE Avenue, New York NY10000, United States</p>
+                    <p>{{ contact.address }}</p>
                 </div>
 
                 <div class="details__item">
                     <img src="@/assets/contact-index/icon-phone.png" />
                     <div class="item__title">Phone</div>
                     <p>
-                        Mobile: +(84) 546-6789<br />
-                        Hotline: +(84) 456-6789
+                        Mobile: {{ contact.mobile }}<br />
+                        Hotline: {{ contact.phone }}
                     </p>
                 </div>
 
@@ -29,16 +30,15 @@
                     <img src="@/assets/contact-index/icon-time.png" />
                     <div class="item__title">Working Time</div>
                     <p>
-                        Monday-Friday: 9:00 - 22:00<br />
-                        Saturday-Sunday: 9:00 - 21:00
+                        {{ contact.workingTime }}
                     </p>
                 </div>
             </div>
 
             <div class="info__form">
-                <el-form ref="formRef" :model="form" label-position="top">
-                    <el-form-item label="Your Name" prop="yourName">
-                        <el-input v-model="form.yourName" placeholder="Abc" />
+                <el-form ref="formRef" :model="form" label-position="top" :rules="formRules">
+                    <el-form-item label="Your Name" prop="name">
+                        <el-input v-model="form.name" placeholder="Abc" />
                     </el-form-item>
                     <el-form-item label="Email address" prop="email">
                         <el-input v-model="form.email" placeholder="Abc@def.com" />
@@ -51,7 +51,7 @@
                     </el-form-item>
                 </el-form>
 
-                <button>Submit</button>
+                <button @click="submitForm">Submit</button>
             </div>
         </div>
 
@@ -60,6 +60,7 @@
 </template>
 
 <script>
+import { IBanners, IContactInfo, ISubmitContact } from '@/api/contact-index/index.js'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 import FooterFuniro from '@/components/FooterFuniro.vue'
 
@@ -73,19 +74,66 @@ export default {
                 { name: 'contact', path: '/contactIndex' }
             ],
             form: {
-                yourName: '',
-                lastName: '',
-                subject: '',
-                country: '',
-                street: '',
-                city: '',
-                province: '',
-                zipCode: '',
-                message: '',
+                name: '',
                 email: '',
-                additional: ''
+                subject: '',
+                message: ''
+            },
+            formRules: {
+                name: [{ required: true, message: 'Place Input YourName', trigger: 'blur' }],
+                email: [{ required: true, message: 'Place Input email', trigger: 'blur' }],
+                subject: [{ required: true, message: 'Place Input subject', trigger: 'blur' }],
+                message: [{ required: true, message: 'Place Input message', trigger: 'blur' }]
+            },
+            banners: {
+                images: []
+            },
+            contact: {
+                address: '',
+                mobile: '',
+                phone: '',
+                workingTime: ''
             }
         }
+    },
+    methods: {
+        /**
+         * 获取封面图
+         */
+        getBanners() {
+            IBanners({ page: 'contactIndex' }).then((res) => {
+                this.banners = res
+            })
+        },
+
+        /**
+         * 获取联系信息
+         */
+        getContactInfo() {
+            IContactInfo().then((res) => {
+                this.contact = res
+            })
+        },
+
+        /**
+         * 表单提交
+         */
+        submitForm() {
+            this.$refs.formRef.validate((valid) => {
+                if (valid) {
+                    ISubmitContact(this.form).then(() => {
+                        this.$message({
+                            message: '提交成功',
+                            type: 'success'
+                        })
+                    })
+                }
+            })
+        }
+    },
+    mounted() {
+        this.getBanners()
+        this.getContactInfo()
     }
 }
 </script>
@@ -118,15 +166,24 @@ export default {
     }
 
     .index__banner {
+        position: relative;
         width: 100%;
         height: 316px;
-        background-image: url('@/assets/shop/banner.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: blur(4px);
+        }
 
         h4 {
             color: #000;
@@ -206,6 +263,7 @@ export default {
                 font-size: 16px;
                 background-color: #b88e2f;
                 border: 1px solid #b88e2f;
+                cursor: pointer;
             }
         }
     }

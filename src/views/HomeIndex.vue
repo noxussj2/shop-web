@@ -3,8 +3,8 @@
         <div class="index__banner">
             <div class="banner__card">
                 <h5>New Arrival</h5>
-                <h4>Discover Our <br />New Collection</h4>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elit tellus, luctus nec ullamcorper mattis.</p>
+                <h4>{{ banner.summary }}</h4>
+                <p>{{ banner.describe }}</p>
                 <button>BUY Now</button>
             </div>
         </div>
@@ -12,29 +12,73 @@
         <h3>Our Products</h3>
 
         <div class="index__products">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            <ProductCard v-for="(item, index) in products.data" :key="index" :data="item" />
         </div>
 
-        <button>Show More</button>
+        <button @click="showMore" v-if="products.data.length < products.count">Show More</button>
 
         <FooterFuniro />
     </div>
 </template>
 
 <script>
+import { INewProduct, IOurProducts } from '@/api/home-index/index.js'
+
 import ProductCard from '@/components/ProductCard.vue'
 import FooterFuniro from '@/components/FooterFuniro.vue'
 
 export default {
-    components: { ProductCard, FooterFuniro }
+    components: { ProductCard, FooterFuniro },
+    data() {
+        return {
+            banner: {
+                summary: '',
+                describe: ''
+            },
+            products: {
+                data: [],
+                count: 0
+            },
+            cond: {
+                page: 1,
+                pageSize: 4
+            }
+        }
+    },
+    methods: {
+        /**
+         * 获取新出商品
+         */
+        getNewProduct() {
+            INewProduct().then((res) => {
+                this.banner = res
+            })
+        },
+
+        /**
+         * 获取商品列表
+         */
+        getProducts() {
+            IOurProducts(this.cond).then((res) => {
+                this.products = res
+            })
+        },
+
+        /**
+         * 展示更多
+         */
+        showMore() {
+            this.cond.page++
+
+            IOurProducts(this.cond).then((res) => {
+                this.products.data.push(...res.data)
+            })
+        }
+    },
+    mounted() {
+        this.getNewProduct()
+        this.getProducts()
+    }
 }
 </script>
 
@@ -115,6 +159,7 @@ export default {
         font-weight: bold;
         background-color: #fff;
         border: 1px solid #b88e2f;
+        cursor: pointer;
     }
 }
 </style>

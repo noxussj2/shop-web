@@ -1,33 +1,16 @@
 <template>
     <div class="shop-index">
         <div class="index__banner">
+            <img :src="banners.images && banners.images[0]" />
             <h4>Shop</h4>
             <BreadcrumbNav :path="path" />
         </div>
 
         <div class="index__products">
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
-            <ProductCard />
+            <ProductCard v-for="(item, index) in products.data" :key="index" :data="item" />
         </div>
 
-        <PaginationButton />
+        <PaginationButton :count="products.count" v-model="cond" @change="getProducts" />
 
         <footer>
             <div class="footer__item">
@@ -63,6 +46,7 @@
 </template>
 
 <script>
+import { IBanners, IProductsList } from '@/api/shop-index/index.js'
 import ProductCard from '@/components/ProductCard.vue'
 import PaginationButton from '@/components/PaginationButton.vue'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
@@ -74,8 +58,42 @@ export default {
             path: [
                 { name: 'Home', path: '/homeIndex' },
                 { name: 'Shop', path: '/shopIndex' }
-            ]
+            ],
+            banners: {
+                images: []
+            },
+            products: {
+                data: [],
+                count: 0
+            },
+            cond: {
+                page: 1,
+                pageSize: 4
+            }
         }
+    },
+    methods: {
+        /**
+         * 获取封面图
+         */
+        getBanners() {
+            IBanners({ page: 'shopIndex' }).then((res) => {
+                this.banners = res
+            })
+        },
+
+        /**
+         * 获取商品列表
+         */
+        getProducts() {
+            IProductsList(this.cond).then((res) => {
+                this.products = res
+            })
+        }
+    },
+    mounted() {
+        this.getBanners()
+        this.getProducts()
     }
 }
 </script>
@@ -87,15 +105,24 @@ export default {
     align-items: center;
 
     .index__banner {
+        position: relative;
         width: 100%;
         height: 316px;
-        background-image: url('@/assets/shop/banner.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+
+        img {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            filter: blur(4px);
+        }
 
         h4 {
             color: #000;

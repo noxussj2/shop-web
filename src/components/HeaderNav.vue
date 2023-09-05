@@ -6,7 +6,6 @@
             <div class="nav__menu">
                 <span @click="link('/homeIndex')">Home</span>
                 <span @click="link('/shopIndex')">Shop</span>
-                <span>About</span>
                 <span @click="link('/contactIndex')">Concat</span>
             </div>
 

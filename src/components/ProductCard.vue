@@ -1,13 +1,13 @@
 <template>
     <div class="product-card" @click="link">
-        <img src="@/assets/home/photo1.png" />
+        <img :src="data.images && data.images[0]" />
 
         <div class="card__container">
-            <h4>Syltherine</h4>
-            <p>Stylish cafe chair</p>
+            <h4>{{ data.name }}</h4>
+            <p>{{ data.summary }}</p>
             <p class="container__price">
-                <span>Rp 2.500.000</span>
-                <span>Rp 3.500.000</span>
+                <span>{{ data.price }}</span>
+                <span>{{ data.priceOld }}</span>
             </p>
         </div>
 
@@ -26,9 +26,15 @@
 
 <script>
 export default {
+    props: {
+        data: {
+            type: Object,
+            default: () => {}
+        }
+    },
     methods: {
         link() {
-            this.$router.push('/shopDetail')
+            this.$router.push('/shopDetail/' + this.data.productId)
         }
     }
 }
@@ -90,6 +96,7 @@ export default {
         align-items: center;
         opacity: 0;
         transition-duration: 0.2s;
+        cursor: pointer;
 
         button {
             width: 202px;
@@ -98,6 +105,7 @@ export default {
             font-size: 16px;
             font-weight: bold;
             background-color: #fff;
+            cursor: pointer;
         }
 
         footer {

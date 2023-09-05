@@ -10,10 +10,16 @@
 
 <script>
 import HeaderNav from './components/HeaderNav.vue'
+import { IToken } from '@/api/csrf-token/index.js'
 
 export default {
     components: {
         HeaderNav
+    },
+    mounted() {
+        IToken().then((res) => {
+            localStorage.setItem('token', res)
+        })
     }
 }
 </script>

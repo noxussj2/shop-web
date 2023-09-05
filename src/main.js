@@ -9,7 +9,7 @@ import './styles/reset.scss'
 import './styles/common.scss'
 import './styles/element-ui.scss'
 
-import { Drawer, Input, Form, FormItem, Col, Row, Select, Option } from 'element-ui'
+import { Drawer, Input, Form, FormItem, Col, Row, Select, Option, Message } from 'element-ui'
 import 'element-ui/lib/theme-chalk/base.css'
 import 'element-ui/lib/theme-chalk/drawer.css'
 import 'element-ui/lib/theme-chalk/dialog.css'
@@ -20,6 +20,8 @@ import 'element-ui/lib/theme-chalk/col.css'
 import 'element-ui/lib/theme-chalk/row.css'
 import 'element-ui/lib/theme-chalk/select.css'
 import 'element-ui/lib/theme-chalk/option.css'
+import 'element-ui/lib/theme-chalk/message.css'
+import 'element-ui/lib/theme-chalk/icon.css'
 
 Vue.use(Drawer)
 Vue.use(Input)
@@ -29,6 +31,8 @@ Vue.use(Col)
 Vue.use(Row)
 Vue.use(Select)
 Vue.use(Option)
+
+Vue.prototype.$message = Message
 
 new Vue({
     router,
