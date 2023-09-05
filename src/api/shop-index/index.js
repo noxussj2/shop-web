@@ -17,3 +17,12 @@ export const IProductsList = (params) => {
         return res
     })
 }
+
+/**
+ * 商品详情 Products Detail
+ */
+export const IProductsDetail = (params) => {
+    return request.get({ url: '/api/v1/products/' + params.productId }, async (res) => {
+        return res
+    })
+}

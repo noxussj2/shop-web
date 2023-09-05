@@ -6,8 +6,8 @@
             <h4>{{ data.name }}</h4>
             <p>{{ data.summary }}</p>
             <p class="container__price">
-                <span>{{ data.price }}</span>
-                <span>{{ data.priceOld }}</span>
+                <span>${{ data.price }}</span>
+                <span>${{ data.priceOld }}</span>
             </p>
         </div>
 
@@ -34,7 +34,7 @@ export default {
     },
     methods: {
         link() {
-            this.$router.push('/shopDetail/' + this.data.productId)
+            this.$router.push('/productDetail/' + this.data.productId)
         }
     }
 }
@@ -61,6 +61,7 @@ export default {
             color: #898989;
             font-size: 16px;
             line-height: 24px;
+            height: 48px;
         }
 
         .container__price {

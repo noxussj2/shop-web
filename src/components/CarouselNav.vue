@@ -42,9 +42,10 @@ export default {
             cursor: pointer;
 
             img {
+                padding: 10px;
                 width: 100%;
                 height: 100%;
-                object-fit: contain;
+                object-fit: cover;
             }
         }
 
@@ -61,9 +62,10 @@ export default {
         background: #f9f1e7;
 
         img {
+            padding: 20px;
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
         }
     }
 }

@@ -3,9 +3,9 @@
         <div class="index__banner">
             <div class="banner__card">
                 <h5>New Arrival</h5>
-                <h4>{{ banner.summary }}</h4>
-                <p>{{ banner.describe }}</p>
-                <button>BUY Now</button>
+                <h4>{{ banners.summary }}</h4>
+                <p>{{ banners.describe }}</p>
+                <button @click="link">BUY Now</button>
             </div>
         </div>
 
@@ -31,9 +31,11 @@ export default {
     components: { ProductCard, FooterFuniro },
     data() {
         return {
-            banner: {
+            banners: {
+                images: [],
                 summary: '',
-                describe: ''
+                describe: '',
+                productId: ''
             },
             products: {
                 data: [],
@@ -51,7 +53,7 @@ export default {
          */
         getNewProduct() {
             INewProduct().then((res) => {
-                this.banner = res
+                this.banners = res
             })
         },
 
@@ -73,6 +75,10 @@ export default {
             IOurProducts(this.cond).then((res) => {
                 this.products.data.push(...res.data)
             })
+        },
+
+        link() {
+            this.$router.push('/productDetail/' + this.banners.productId)
         }
     },
     mounted() {
@@ -89,6 +95,7 @@ export default {
     align-items: center;
 
     .index__banner {
+        position: relative;
         padding-top: 158px;
         padding-right: 58px;
         width: 100%;

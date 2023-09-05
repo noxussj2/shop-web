@@ -6,20 +6,13 @@
         </header>
 
         <main>
-            <section>
-                <img src="@/assets/cart-drawer/car1.png" />
+            <section v-for="(item, index) in data.items" :key="index">
+                <img :src="item.images && item.images[0]" />
                 <div class="section__info">
-                    <h5>Asgaard sofa</h5>
-                    <p><span>1</span> <span>x</span> <span class="info__price">Rs. 250,000.00</span></p>
-                </div>
-                <img src="@/assets/cart-drawer/icon-del.png" class="section__del" />
-            </section>
-
-            <section>
-                <img src="@/assets/cart-drawer/car2.png" />
-                <div class="section__info">
-                    <h5>Casaliving Wood</h5>
-                    <p><span>1</span> <span>x</span> <span class="info__price">Rs. 270,000.00</span></p>
+                    <h5>{{ item.name }}</h5>
+                    <p>
+                        <span>{{ item.num }}</span> <span>x</span> <span class="info__price">Rs. {{ item.price }}</span>
+                    </p>
                 </div>
                 <img src="@/assets/cart-drawer/icon-del.png" class="section__del" />
             </section>
@@ -28,7 +21,7 @@
         <footer>
             <div class="footer__total">
                 <h5>Subtotal</h5>
-                <span>Rs. 520,000.00</span>
+                <span>Rs. {{ subtotal }}</span>
             </div>
 
             <div class="footer__button-group">
@@ -41,14 +34,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
-    methods: {
-        link(path) {
-            if (this.$route.path === path) return
-            this.$router.push(path)
-        }
-    },
     computed: {
+        ...mapState({
+            data: (state) => state.cart
+        }),
+
+        subtotal() {
+            return this.data.items.reduce((acc, cur) => acc + cur.price * cur.num, 0)
+        },
+
         drawer: {
             get() {
                 return this.$store.state.cart.show
@@ -56,6 +53,12 @@ export default {
             set(val) {
                 this.$store.commit('cart/showCart', val)
             }
+        }
+    },
+    methods: {
+        link(path) {
+            if (this.$route.path === path) return
+            this.$router.push(path)
         }
     }
 }

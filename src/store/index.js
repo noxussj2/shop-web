@@ -8,11 +8,27 @@ const store = new Vuex.Store({
         cart: {
             namespaced: true,
             state: {
-                show: false
+                show: false,
+                items: []
             },
             mutations: {
+                /**
+                 * 展示购物车
+                 */
                 showCart(state, payload) {
                     state.show = payload
+                },
+
+                /**
+                 * 添加商品到购物车
+                 */
+                addCart(state, payload) {
+                    const findIndex = state.items.findIndex((item) => item.productId === payload.productId)
+                    if (findIndex > -1) {
+                        return (state.items[findIndex].num += payload.num)
+                    }
+
+                    state.items.push(payload)
                 }
             }
         }

@@ -1,61 +1,58 @@
 <template>
-    <div class="shop-index">
+    <div class="product-detail">
         <div class="index__breadcrumb">
-            <BreadcrumbNav :path="path" end="Asgaard sofa" />
+            <BreadcrumbNav :path="path" :end="data.name" />
         </div>
 
         <div class="index__good">
-            <CarouselNav :data="calouselList" />
+            <CarouselNav :data="data.images" />
 
             <div class="good__info">
-                <h4>Asgaard sofa</h4>
-                <div class="info__price">Rs. 250,000.00</div>
+                <h4>{{ data.name }}</h4>
+                <div class="info__price">Rs. {{ data.price }}</div>
 
                 <p>
-                    Setting the bar as one of the loudest speakers in its class, the Kilburn is a compact, stout-hearted hero with a well-balanced audio which boasts a
-                    clear midrange and extended highs for a sound.
+                    {{ data.describe }}
                 </p>
 
                 <h5>Size</h5>
 
-                <ButtonGroup v-model="sizeActive" :options="sizeList" />
+                <ButtonGroup v-model="form.sizeActive" :options="data.size" />
 
                 <h5>Color</h5>
 
                 <div class="info__colors">
-                    <button :style="{ background: '#816DFA' }"></button>
-                    <button :style="{ background: '#000' }"></button>
-                    <button :style="{ background: '#B88E2F' }"></button>
+                    <button :style="{ background: item }" v-for="(item, index) in data.color" :key="index"></button>
                 </div>
 
                 <div class="info__count">
-                    <NumberCounter v-model="num" />
+                    <NumberCounter v-model="form.num" />
 
-                    <button>Add To Cart</button>
+                    <button @click="handleAddCart">Add To Cart</button>
                 </div>
 
                 <div class="info__describe">
                     <div class="describe__item">
                         <div class="item__name">SKU</div>
-                        <div class="item__value">SS001</div>
+                        <div class="item__value">{{ data.sku }}</div>
                     </div>
 
                     <div class="describe__item">
                         <div class="item__name">Category</div>
-                        <div class="item__value">Sofas</div>
+                        <div class="item__value">{{ data.category }}</div>
                     </div>
 
                     <div class="describe__item">
                         <div class="item__name">Tags</div>
-                        <div class="item__value">Sofa, Chair, Home, Shop</div>
+                        <div class="item__value">{{ data.tags.join(', ') }}</div>
                     </div>
 
                     <div class="describe__item">
                         <div class="item__name">Share</div>
                         <div class="item__value">
-                            <img src="@/assets/shop-detail/icon-facebook.png" alt="" />
-                            <img src="@/assets/shop-detail/icon-linkedin.png" alt="" />
-                            <img src="@/assets/shop-detail/icon-twitter.png" alt="" />
+                            <img src="@/assets/product-detail/icon-facebook.png" alt="" />
+                            <img src="@/assets/product-detail/icon-linkedin.png" alt="" />
+                            <img src="@/assets/product-detail/icon-twitter.png" alt="" />
                         </div>
                     </div>
                 </div>
@@ -67,14 +64,10 @@
 </template>
 
 <script>
+import { IProductsDetail } from '@/api/shop-index/index.js'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 import FooterFuniro from '@/components/FooterFuniro.vue'
 import CarouselNav from '@/components/CarouselNav.vue'
-
-import Carousel1 from '@/assets/shop-detail/carousel1.png'
-import Carousel2 from '@/assets/shop-detail/carousel2.png'
-import Carousel3 from '@/assets/shop-detail/carousel3.png'
-import Carousel4 from '@/assets/shop-detail/carousel4.png'
 
 import ButtonGroup from '@/components/ButtonGroup.vue'
 import NumberCounter from '@/components/NumberCounter.vue'
@@ -87,21 +80,55 @@ export default {
                 { name: 'Home', path: '/homeIndex' },
                 { name: 'Shop', path: '/shopIndex' }
             ],
-            calouselList: [Carousel1, Carousel2, Carousel3, Carousel4],
-            sizeActive: '1',
-            sizeList: [
-                { name: 'L', value: '1' },
-                { name: 'XL', value: '2' },
-                { name: 'XS', value: '3' }
-            ],
-            num: 1
+            data: {
+                productId: '',
+                name: '',
+                summary: '',
+                describe: '',
+                price: 0,
+                priceOld: 0,
+                images: [],
+                sku: '',
+                category: '',
+                tags: [],
+                size: [],
+                color: []
+            },
+            form: {
+                sizeActive: '1',
+                num: 1
+            }
         }
+    },
+    methods: {
+        /**
+         * 添加到购物车
+         */
+        handleAddCart() {
+            const form = {
+                name: this.data.name,
+                productId: this.data.productId,
+                price: this.data.price,
+                images: this.data.images,
+                num: this.form.num,
+                sizeActive: this.form.sizeActive
+            }
+
+            this.$store.commit('cart/addCart', form)
+            this.$store.commit('cart/showCart', true)
+        }
+    },
+    mounted() {
+        const productId = this.$route.params.productId
+        IProductsDetail({ productId }).then((res) => {
+            this.data = res
+        })
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.shop-index {
+.product-detail {
     .index__breadcrumb {
         padding: 0 102px;
         height: 100px;
