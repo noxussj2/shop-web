@@ -11,10 +11,10 @@
                 <div class="section__info">
                     <h5>{{ item.name }}</h5>
                     <p>
-                        <span>{{ item.num }}</span> <span>x</span> <span class="info__price">Rs. {{ item.price }}</span>
+                        <span>{{ item.number }}</span> <span>x</span> <span class="info__price">Rs. {{ item.price }}</span>
                     </p>
                 </div>
-                <img src="@/assets/cart-drawer/icon-del.png" class="section__del" />
+                <img src="@/assets/cart-drawer/icon-del.png" class="section__del" @click="delCart(index)" />
             </section>
         </main>
 
@@ -35,6 +35,7 @@
 
 <script>
 import { mapState } from 'vuex'
+import { mapMutations } from 'vuex'
 
 export default {
     computed: {
@@ -59,7 +60,14 @@ export default {
         link(path) {
             if (this.$route.path === path) return
             this.$router.push(path)
-        }
+        },
+
+        ...mapMutations({
+            delCart: 'cart/delCart'
+        })
+    },
+    mounted() {
+        console.log(this.data)
     }
 }
 </script>

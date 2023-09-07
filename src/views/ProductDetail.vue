@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="info__count">
-                    <NumberCounter v-model="form.num" />
+                    <NumberCounter v-model="form.number" />
 
                     <button @click="handleAddCart">Add To Cart</button>
                 </div>
@@ -96,7 +96,7 @@ export default {
             },
             form: {
                 sizeActive: '1',
-                num: 1
+                number: 1
             }
         }
     },
@@ -110,7 +110,7 @@ export default {
                 productId: this.data.productId,
                 price: this.data.price,
                 images: this.data.images,
-                num: this.form.num,
+                number: this.form.number,
                 sizeActive: this.form.sizeActive
             }
 

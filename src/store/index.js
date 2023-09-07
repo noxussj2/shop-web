@@ -9,7 +9,15 @@ const store = new Vuex.Store({
             namespaced: true,
             state: {
                 show: false,
-                items: []
+                items: JSON.parse(localStorage.getItem('carts') || '[]')
+            },
+            getters: {
+                /**
+                 * 购物车商品总金额
+                 */
+                totalPrice(state) {
+                    return state.items.reduce((total, item) => total + item.number * item.price, 0)
+                }
             },
             mutations: {
                 /**
@@ -25,10 +33,21 @@ const store = new Vuex.Store({
                 addCart(state, payload) {
                     const findIndex = state.items.findIndex((item) => item.productId === payload.productId)
                     if (findIndex > -1) {
-                        return (state.items[findIndex].num += payload.num)
+                        return (state.items[findIndex].number += payload.number)
                     }
 
                     state.items.push(payload)
+
+                    localStorage.setItem('carts', JSON.stringify(state.items))
+                },
+
+                /**
+                 * 删除购物车商品
+                 */
+                delCart(state, payload) {
+                    state.items.splice(payload, 1)
+
+                    localStorage.setItem('carts', JSON.stringify(state.items))
                 }
             }
         }

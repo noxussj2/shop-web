@@ -10,7 +10,7 @@
                 <div class="index__details">
                     <h4>Billing details</h4>
 
-                    <el-form ref="formRef" :model="form" label-position="top">
+                    <el-form ref="formRef" :model="form" label-position="top" :rules="formRules">
                         <el-form-item>
                             <el-row :gutter="30">
                                 <el-col :span="12">
@@ -25,29 +25,11 @@
                                 </el-col>
                             </el-row>
                         </el-form-item>
-                        <el-form-item label="Company Name (Optional)" prop="companyName">
-                            <el-input v-model="form.companyName" />
+                        <el-form-item label="Address" prop="address">
+                            <el-input v-model="form.address" />
                         </el-form-item>
-                        <el-form-item label="Country / Region" prop="country">
-                            <el-select v-model="form.country" placeholder="Sri Lanka">
-                                <el-option label="Options1" value="1" />
-                                <el-option label="Options2" value="2" />
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="Street address" prop="street">
-                            <el-input v-model="form.street" />
-                        </el-form-item>
-                        <el-form-item label="Town / City" prop="city">
-                            <el-input v-model="form.city" />
-                        </el-form-item>
-                        <el-form-item label="Province" prop="province">
-                            <el-select v-model="form.province" placeholder="Western Province">
-                                <el-option label="Options1" value="1" />
-                                <el-option label="Options2" value="2" />
-                            </el-select>
-                        </el-form-item>
-                        <el-form-item label="ZIP code" prop="zipCode">
-                            <el-input v-model="form.zipCode" />
+                        <el-form-item label="ZIP code" prop="code">
+                            <el-input v-model="form.code" />
                         </el-form-item>
                         <el-form-item label="Phone" prop="phone">
                             <el-input v-model="form.phone" />
@@ -55,8 +37,8 @@
                         <el-form-item label="Email address" prop="email">
                             <el-input v-model="form.email" />
                         </el-form-item>
-                        <el-form-item label="" prop="additional">
-                            <el-input v-model="form.additional" placeholder="Additional information" />
+                        <el-form-item label="Remark" prop="remark">
+                            <el-input v-model="form.remark" placeholder="" />
                         </el-form-item>
                     </el-form>
                 </div>
@@ -68,13 +50,13 @@
                         <h5>Product</h5>
                         <h5>Subtotal</h5>
                     </div>
-                    <div class="product__row">
+                    <div class="product__row" v-for="(item, index) in carts" :key="index">
                         <span>
-                            <span class="row__name">Asgaard sofa</span>
+                            <span class="row__name">{{ item.name }}</span>
                             <span class="row__x">x</span>
-                            <span>1</span>
+                            <span>{{ item.number }}</span>
                         </span>
-                        <span>Rs. 250,000.00</span>
+                        <span>Rs. {{ item.price }}</span>
                     </div>
                     <div class="product__row">
                         <span>Subtotal</span>
@@ -100,7 +82,7 @@
                             </summary>
                         </ul>
 
-                        <button>Place order</button>
+                        <button @click="submitForm">Place order</button>
                     </footer>
                 </div>
             </el-col>
@@ -111,6 +93,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+import { ISubmitOrder } from '@/api/checkout-index/index.js'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 import FooterFuniro from '@/components/FooterFuniro.vue'
 
@@ -126,16 +110,47 @@ export default {
             form: {
                 firstName: '',
                 lastName: '',
-                companyName: '',
-                country: '',
-                street: '',
-                city: '',
-                province: '',
-                zipCode: '',
+                address: '',
+                code: '',
                 phone: '',
                 email: '',
-                additional: ''
+                remark: '',
+                totalPrice: 100,
+                items: []
+            },
+            formRules: {
+                firstName: [{ required: true, message: 'Place Input FirstName', trigger: 'blur' }],
+                lastName: [{ required: true, message: 'Place Input LastName', trigger: 'blur' }],
+                address: [{ required: true, message: 'Place Input Address', trigger: 'blur' }],
+                companyName: [{ required: true, message: 'Place Input CompanyName', trigger: 'blur' }],
+                country: [{ required: true, message: 'Place Input Country', trigger: 'blur' }],
+                code: [{ required: true, message: 'Place Input Zip Code', trigger: 'blur' }],
+                phone: [{ required: true, message: 'Place Input Phone', trigger: 'blur' }],
+                email: [{ required: true, message: 'Place Input Email', trigger: 'blur' }],
+                remark: [{ required: true, message: 'Place Input Remark', trigger: 'blur' }]
             }
+        }
+    },
+    computed: {
+        ...mapState({
+            carts: (state) => state.cart.items
+        })
+    },
+    methods: {
+        /**
+         * 表单提交
+         */
+        submitForm() {
+            this.$refs.formRef.validate((valid) => {
+                if (valid) {
+                    ISubmitOrder(this.form).then(() => {
+                        this.$message({
+                            message: '提交成功',
+                            type: 'success'
+                        })
+                    })
+                }
+            })
         }
     }
 }
@@ -301,6 +316,7 @@ export default {
                 border-radius: 15px;
                 background-color: transparent;
                 border: 1px solid #000;
+                cursor: pointer;
             }
         }
     }
