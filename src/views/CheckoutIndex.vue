@@ -60,11 +60,11 @@
                     </div>
                     <div class="product__row">
                         <span>Subtotal</span>
-                        <span>Rs. 250,000.00</span>
+                        <span>Rs. {{ form.totalPrice }}</span>
                     </div>
                     <div class="product__row">
                         <span>Total</span>
-                        <h5 class="row__total">Rs. 250,000.00</h5>
+                        <h5 class="row__total">Rs. {{ form.totalPrice }}</h5>
                     </div>
 
                     <footer>
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { ISubmitOrder } from '@/api/checkout-index/index.js'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 import FooterFuniro from '@/components/FooterFuniro.vue'
@@ -134,6 +134,10 @@ export default {
     computed: {
         ...mapState({
             carts: (state) => state.cart.items
+        }),
+
+        ...mapGetters({
+            totalPrice: 'cart/totalPrice'
         })
     },
     methods: {
@@ -152,6 +156,14 @@ export default {
                 }
             })
         }
+    },
+    mounted() {
+        const items = this.carts.map((x) => {
+            return { number: x.number, productId: x.productId }
+        })
+
+        this.form.items = JSON.stringify(items)
+        this.form.totalPrice = this.totalPrice
     }
 }
 </script>

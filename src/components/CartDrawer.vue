@@ -21,7 +21,7 @@
         <footer>
             <div class="footer__total">
                 <h5>Subtotal</h5>
-                <span>Rs. {{ subtotal }}</span>
+                <span>Rs. {{ totalPrice }}</span>
             </div>
 
             <div class="footer__button-group">
@@ -34,13 +34,17 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
 
 export default {
     computed: {
         ...mapState({
             data: (state) => state.cart
+        }),
+
+        ...mapGetters({
+            totalPrice: 'cart/totalPrice'
         }),
 
         subtotal() {
@@ -65,9 +69,6 @@ export default {
         ...mapMutations({
             delCart: 'cart/delCart'
         })
-    },
-    mounted() {
-        console.log(this.data)
     }
 }
 </script>
