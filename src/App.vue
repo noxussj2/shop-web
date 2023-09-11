@@ -17,6 +17,9 @@ export default {
         HeaderNav
     },
     mounted() {
+        /**
+         * 获取 CSRF Token
+         */
         IToken().then((res) => {
             localStorage.setItem('token', res)
         })

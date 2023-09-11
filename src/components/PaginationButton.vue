@@ -35,17 +35,28 @@ export default {
         }
     },
     methods: {
+        /**
+         * 切换页码
+         */
         handlePage(page) {
             if (page !== this._value.page) {
                 this._value = { page, pageSize: this._value.pageSize }
                 this.$emit('change')
             }
         },
+
+        /**
+         * 上一页
+         */
         handlePrev() {
             const page = this._value.page - 1
             this._value = { page, pageSize: this._value.pageSize }
             this.$emit('change')
         },
+
+        /**
+         * 下一页
+         */
         handleNext() {
             const page = this._value.page + 1
             this._value = { page, pageSize: this._value.pageSize }

@@ -2,7 +2,7 @@
     <div class="breadcrumb-nav">
         <!-- has end -->
         <template v-if="end">
-            <section v-for="(item, index) in path" :key="index" @click="link(item.path)">
+            <section v-for="(item, index) in path" :key="index" @click="$link(item.path)">
                 <span>{{ item.name }}</span>
                 <img src="@/assets/icon-arrow.png" alt="" />
             </section>
@@ -11,7 +11,7 @@
 
         <!-- not end -->
         <template v-else>
-            <section v-for="(item, index) in path" :key="index" :class="{ active: index === path.length - 1 }" @click="link(item.path)">
+            <section v-for="(item, index) in path" :key="index" :class="{ active: index === path.length - 1 }" @click="$link(item.path)">
                 <span>{{ item.name }}</span>
                 <img src="@/assets/icon-arrow.png" alt="" v-if="index !== path.length - 1" />
             </section>
@@ -29,12 +29,6 @@ export default {
         end: {
             type: String,
             default: ''
-        }
-    },
-    methods: {
-        link(path) {
-            if (this.$route.path === path) return
-            this.$router.push(path)
         }
     }
 }

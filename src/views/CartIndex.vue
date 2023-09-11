@@ -23,7 +23,7 @@
                             <td><el-input :value="item.number" @input="handleInput($event, index)" /></td>
                             <td class="tr__total">
                                 <span>Rs. {{ item.price * item.number }}</span>
-                                <img class="icon-del" src="@/assets/cart-index/icon-del.png" />
+                                <img class="icon-del" src="@/assets/cart-index/icon-del.png" @click="delCart(index)" />
                             </td>
                         </tr>
                     </tbody>
@@ -43,7 +43,7 @@
                     <p class="total">Rs. {{ totalPrice }}</p>
                 </div>
 
-                <button @click="link('/checkoutIndex')">Check Out</button>
+                <button @click="$link('/checkoutIndex')">Check Out</button>
             </div>
         </div>
 
@@ -82,6 +82,7 @@ export default {
     },
     methods: {
         ...mapMutations({
+            delCart: 'cart/delCart',
             editCart: 'cart/editCart'
         }),
 
@@ -92,14 +93,6 @@ export default {
             IBanners({ page: 'cartIndex' }).then((res) => {
                 this.banners = res
             })
-        },
-
-        /**
-         * 路由跳转
-         */
-        link(path) {
-            if (this.$route.path === path) return
-            this.$router.push(path)
         },
 
         /**

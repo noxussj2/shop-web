@@ -4,9 +4,9 @@
 
         <header>
             <div class="nav__menu">
-                <span @click="link('/homeIndex')">Home</span>
-                <span @click="link('/shopIndex')">Shop</span>
-                <span @click="link('/contactIndex')">Concat</span>
+                <span @click="$link('/homeIndex')">Home</span>
+                <span @click="$link('/shopIndex')">Shop</span>
+                <span @click="$link('/contactIndex')">Concat</span>
             </div>
 
             <div class="nav__operate">
@@ -25,12 +25,6 @@ import CartDrawer from '@/components/CartDrawer.vue'
 
 export default {
     components: { CartDrawer },
-    methods: {
-        link(path) {
-            if (this.$route.path === path) return
-            this.$router.push(path)
-        }
-    },
     computed: {
         cartDrawer: {
             get() {

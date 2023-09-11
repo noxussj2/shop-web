@@ -19,6 +19,9 @@ export default {
         }
     },
     methods: {
+        /**
+         * 计数器加减
+         */
         handleClick(type) {
             if (type === 'minus') {
                 if (this.value <= 1) return
@@ -26,11 +29,6 @@ export default {
             } else {
                 this.$emit('update:value', this.value + 1)
             }
-        },
-        handleInput(e) {
-            const value = e.target.value
-            if (value <= 0) return
-            this.$emit('update:value', value)
         }
     }
 }

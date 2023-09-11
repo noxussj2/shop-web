@@ -8,3 +8,13 @@ const router = new Router({
 })
 
 export default router
+
+/**
+ * 路由跳转
+ */
+export const link = (path) => {
+    if (router.currentRoute.path === path) return // 禁止跳转回自己
+    router.push(path)
+}
+
+Vue.prototype.$link = link

@@ -25,8 +25,8 @@
             </div>
 
             <div class="footer__button-group">
-                <button @click="link('/cartIndex')">Cart</button>
-                <button @click="link('/checkoutIndex')">Checkout</button>
+                <button @click="$link('/cartIndex')">Cart</button>
+                <button @click="$link('/checkoutIndex')">Checkout</button>
                 <button>Comparison</button>
             </div>
         </footer>
@@ -61,11 +61,6 @@ export default {
         }
     },
     methods: {
-        link(path) {
-            if (this.$route.path === path) return
-            this.$router.push(path)
-        },
-
         ...mapMutations({
             delCart: 'cart/delCart'
         })
