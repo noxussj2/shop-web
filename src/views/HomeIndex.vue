@@ -23,7 +23,6 @@
 
 <script>
 import { INewProduct, IOurProducts } from '@/api/home-index/index.js'
-
 import ProductCard from '@/components/ProductCard.vue'
 import FooterFuniro from '@/components/FooterFuniro.vue'
 

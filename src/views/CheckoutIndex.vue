@@ -1,6 +1,7 @@
 <template>
     <div class="cart-index">
-        <div class="index__banner">
+        <div class="base__banner">
+            <img :src="banners.images && banners.images[0]" />
             <h4>Checkout</h4>
             <BreadcrumbNav :path="path" />
         </div>
@@ -94,7 +95,7 @@
 
 <script>
 import { mapState, mapGetters } from 'vuex'
-import { ISubmitOrder } from '@/api/checkout-index/index.js'
+import { IBanners, ISubmitOrder } from '@/api/checkout-index/index.js'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 import FooterFuniro from '@/components/FooterFuniro.vue'
 
@@ -128,6 +129,9 @@ export default {
                 phone: [{ required: true, message: 'Place Input Phone', trigger: 'blur' }],
                 email: [{ required: true, message: 'Place Input Email', trigger: 'blur' }],
                 remark: [{ required: true, message: 'Place Input Remark', trigger: 'blur' }]
+            },
+            banners: {
+                images: []
             }
         }
     },
@@ -147,6 +151,13 @@ export default {
         submitForm() {
             this.$refs.formRef.validate((valid) => {
                 if (valid) {
+                    const items = this.carts.map((x) => {
+                        return { number: x.number, productId: x.productId }
+                    })
+
+                    this.form.items = JSON.stringify(items)
+                    this.form.totalPrice = this.totalPrice
+
                     ISubmitOrder(this.form).then(() => {
                         this.$message({
                             message: '提交成功',
@@ -155,15 +166,19 @@ export default {
                     })
                 }
             })
+        },
+
+        /**
+         * 获取封面图
+         */
+        getBanners() {
+            IBanners({ page: 'checkoutIndex' }).then((res) => {
+                this.banners = res
+            })
         }
     },
     mounted() {
-        const items = this.carts.map((x) => {
-            return { number: x.number, productId: x.productId }
-        })
-
-        this.form.items = JSON.stringify(items)
-        this.form.totalPrice = this.totalPrice
+        this.getBanners()
     }
 }
 </script>
@@ -177,47 +192,6 @@ export default {
     > .el-row {
         padding: 0 100px;
         width: 100%;
-    }
-
-    .index__banner {
-        width: 100%;
-        height: 316px;
-        background-image: url('@/assets/shop/banner.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        h4 {
-            color: #000;
-            font-size: 48px;
-            line-height: 72px;
-        }
-
-        h5 {
-            margin-top: 2px;
-            color: #000;
-            font-size: 16px;
-            line-height: 24px;
-            display: flex;
-            align-items: center;
-
-            img {
-                margin: 0 6px;
-                width: 20px;
-                height: 20px;
-            }
-
-            span:first-of-type {
-                font-weight: bold;
-            }
-
-            span:last-of-type {
-                font-weight: normal;
-            }
-        }
     }
 
     .index__details {

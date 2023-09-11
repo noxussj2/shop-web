@@ -1,6 +1,6 @@
 <template>
     <div class="contact-index">
-        <div class="index__banner">
+        <div class="base__banner">
             <img :src="banners.images && banners.images[0]" />
             <h4>Contact</h4>
             <BreadcrumbNav :path="path" />
@@ -163,56 +163,6 @@ export default {
     > .el-row {
         padding: 0 100px;
         width: 100%;
-    }
-
-    .index__banner {
-        position: relative;
-        width: 100%;
-        height: 316px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        img {
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
-            filter: blur(4px);
-        }
-
-        h4 {
-            color: #000;
-            font-size: 48px;
-            line-height: 72px;
-        }
-
-        h5 {
-            margin-top: 2px;
-            color: #000;
-            font-size: 16px;
-            line-height: 24px;
-            display: flex;
-            align-items: center;
-
-            img {
-                margin: 0 6px;
-                width: 20px;
-                height: 20px;
-            }
-
-            span:first-of-type {
-                font-weight: bold;
-            }
-
-            span:last-of-type {
-                font-weight: normal;
-            }
-        }
     }
 
     .index__info {

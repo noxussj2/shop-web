@@ -1,6 +1,7 @@
 <template>
     <div class="cart-index">
-        <div class="index__banner">
+        <div class="base__banner">
+            <img :src="banners.images && banners.images[0]" />
             <h4>Cart</h4>
             <BreadcrumbNav :path="path" />
         </div>
@@ -52,6 +53,7 @@
 
 <script>
 import { mapState, mapGetters, mapMutations } from 'vuex'
+import { IBanners } from '@/api/shop-index/index.js'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 import FooterFuniro from '@/components/FooterFuniro.vue'
 
@@ -63,7 +65,10 @@ export default {
             path: [
                 { name: 'Home', path: '/homeIndex' },
                 { name: 'Cart', path: '/cartIndex' }
-            ]
+            ],
+            banners: {
+                images: []
+            }
         }
     },
     computed: {
@@ -79,13 +84,33 @@ export default {
         ...mapMutations({
             editCart: 'cart/editCart'
         }),
+
+        /**
+         * 获取封面图
+         */
+        getBanners() {
+            IBanners({ page: 'cartIndex' }).then((res) => {
+                this.banners = res
+            })
+        },
+
+        /**
+         * 路由跳转
+         */
         link(path) {
             if (this.$route.path === path) return
             this.$router.push(path)
         },
+
+        /**
+         * 修改购物车数量
+         */
         handleInput(e, index) {
             this.editCart({ index, number: Number(e) })
         }
+    },
+    mounted() {
+        this.getBanners()
     }
 }
 </script>
@@ -95,47 +120,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    .index__banner {
-        width: 100%;
-        height: 316px;
-        background-image: url('@/assets/shop/banner.png');
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-
-        h4 {
-            color: #000;
-            font-size: 48px;
-            line-height: 72px;
-        }
-
-        h5 {
-            margin-top: 2px;
-            color: #000;
-            font-size: 16px;
-            line-height: 24px;
-            display: flex;
-            align-items: center;
-
-            img {
-                margin: 0 6px;
-                width: 20px;
-                height: 20px;
-            }
-
-            span:first-of-type {
-                font-weight: bold;
-            }
-
-            span:last-of-type {
-                font-weight: normal;
-            }
-        }
-    }
 
     .index__products {
         margin-top: 70px;
