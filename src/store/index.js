@@ -48,6 +48,15 @@ const store = new Vuex.Store({
                     state.items.splice(payload, 1)
 
                     localStorage.setItem('carts', JSON.stringify(state.items))
+                },
+
+                /**
+                 * 修改购物车商品数量
+                 */
+                editCart(state, payload) {
+                    state.items[payload.index].number = payload.number
+
+                    localStorage.setItem('carts', JSON.stringify(state.items))
                 }
             }
         }

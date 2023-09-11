@@ -7,21 +7,21 @@
 
         <div class="index__products">
             <div class="products__table">
-                <table>
+                <table style="width: 100%">
                     <thead>
-                        <th style="width: 30%">Product</th>
-                        <th style="width: 20%">Price</th>
+                        <th style="width: 40%">Product</th>
+                        <th style="width: 15%">Price</th>
                         <th style="width: 15%">Quantity</th>
                         <th style="width: 30%">Subtotal</th>
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td><img class="icon-photo" src="@/assets/cart-index/car1.png" /> Asgaard sofa</td>
-                            <td>Rs. 250,000.00</td>
-                            <td><el-input v-model="input" /></td>
+                        <tr v-for="(item, index) in data.items" :key="index">
+                            <td><img class="icon-photo" :src="item.images && item.images[0]" /> {{ item.name }}</td>
+                            <td>Rs. {{ item.price }}</td>
+                            <td><el-input :value="item.number" @input="handleInput($event, index)" /></td>
                             <td class="tr__total">
-                                <span>Rs. 250,000.00</span>
+                                <span>Rs. {{ item.price * item.number }}</span>
                                 <img class="icon-del" src="@/assets/cart-index/icon-del.png" />
                             </td>
                         </tr>
@@ -34,15 +34,15 @@
 
                 <div class="totals__row">
                     <span>Subtotal</span>
-                    <p>Rs. 250,000.00</p>
+                    <p>Rs. {{ totalPrice }}</p>
                 </div>
 
                 <div class="totals__row">
                     <span>Total</span>
-                    <p class="total">Rs. 250,000.00</p>
+                    <p class="total">Rs. {{ totalPrice }}</p>
                 </div>
 
-                <button>Check Out</button>
+                <button @click="link('/checkoutIndex')">Check Out</button>
             </div>
         </div>
 
@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapMutations } from 'vuex'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 import FooterFuniro from '@/components/FooterFuniro.vue'
 
@@ -63,6 +64,27 @@ export default {
                 { name: 'Home', path: '/homeIndex' },
                 { name: 'Cart', path: '/cartIndex' }
             ]
+        }
+    },
+    computed: {
+        ...mapState({
+            data: (state) => state.cart
+        }),
+
+        ...mapGetters({
+            totalPrice: 'cart/totalPrice'
+        })
+    },
+    methods: {
+        ...mapMutations({
+            editCart: 'cart/editCart'
+        }),
+        link(path) {
+            if (this.$route.path === path) return
+            this.$router.push(path)
+        },
+        handleInput(e, index) {
+            this.editCart({ index, number: Number(e) })
         }
     }
 }
@@ -142,7 +164,7 @@ export default {
                 tbody:before {
                     content: '';
                     display: block;
-                    height: 55px;
+                    height: 0;
                 }
 
                 tbody {
@@ -151,6 +173,7 @@ export default {
                         vertical-align: middle;
 
                         td {
+                            padding-top: 40px;
                             padding-left: 40px;
                             color: #9f9f9f;
                         }
