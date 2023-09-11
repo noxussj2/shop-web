@@ -4,7 +4,7 @@
         <template v-if="end">
             <section v-for="(item, index) in path" :key="index" @click="link(item.path)">
                 <span>{{ item.name }}</span>
-                <img src="@/assets/shop/icon-arrow.png" alt="" />
+                <img src="@/assets/icon-arrow.png" alt="" />
             </section>
             <div class="end">{{ end }}</div>
         </template>
@@ -13,7 +13,7 @@
         <template v-else>
             <section v-for="(item, index) in path" :key="index" :class="{ active: index === path.length - 1 }" @click="link(item.path)">
                 <span>{{ item.name }}</span>
-                <img src="@/assets/shop/icon-arrow.png" alt="" v-if="index !== path.length - 1" />
+                <img src="@/assets/icon-arrow.png" alt="" v-if="index !== path.length - 1" />
             </section>
         </template>
     </div>
