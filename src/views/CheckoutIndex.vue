@@ -61,11 +61,11 @@
                     </div>
                     <div class="product__row">
                         <span>Subtotal</span>
-                        <span>Rs. {{ form.totalPrice }}</span>
+                        <span>Rs. {{ totalPrice }}</span>
                     </div>
                     <div class="product__row">
                         <span>Total</span>
-                        <h5 class="row__total">Rs. {{ form.totalPrice }}</h5>
+                        <h5 class="row__total">Rs. {{ totalPrice }}</h5>
                     </div>
 
                     <footer>
@@ -116,7 +116,7 @@ export default {
                 phone: '',
                 email: '',
                 remark: '',
-                totalPrice: 100,
+                totalPrice: 0,
                 items: []
             },
             formRules: {
